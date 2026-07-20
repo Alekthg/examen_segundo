@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Policía Segundo 2026 – Manual PSegundo (140 preguntas)</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #0b1f2d;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+        .examen-wrapper {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(20, 38, 52, 0.7);
+            backdrop-filter: blur(4px);
+            border-radius: 48px;
+            padding: 2rem 1.8rem;
+            border: 1px solid rgba(255, 215, 120, 0.08);
+            box-shadow: 0 25px 45px -10px rgba(0, 0, 0, 0.8);
+        }
+        h1 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: #ecf5ff;
+            border-left: 8px solid #d4b06a;
+            padding-left: 1.4rem;
+            margin-bottom: 0.4rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            letter-spacing: 0.5px;
+        }
+        .subhead {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+            border-bottom: 1px solid #2a4a5a;
+            padding-bottom: 0.9rem;
+            margin-bottom: 1.2rem;
+            gap: 12px;
+        }
+        .subhead span {
+            color: #b0cce0;
+            background: #102433;
+            padding: 0.3rem 1.4rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            border: 1px solid #3a5a6a;
+        }
+        .controles-superiores {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn {
+            border: none;
+            padding: 0.6rem 1.6rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            background: #1f3b54;
+            color: #f0f8ff;
+            cursor: pointer;
+            transition: 0.1s;
+            box-shadow: 0 4px 0 #0b1a2a;
+            border: 1px solid #3f6585;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.3px;
+        }
+        .btn:hover { background: #2a4b6a; transform: translateY(-2px); box-shadow: 0 6px 0 #0b1a2a; }
+        .btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #0b1a2a; }
+        .btn-reset { background: #4a2f2f; border-color: #7a4f4f; }
+        .btn-reset:hover { background: #633f3f; }
+        .btn-corregir { background: #2a5a3a; border-color: #4a8a5a; }
+        .btn-corregir:hover { background: #3a7a4a; }
+
+        .filtro-nivel {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #102433;
+            padding: 0.3rem 1.2rem 0.3rem 1.5rem;
+            border-radius: 60px;
+            border: 1px solid #3a5a6a;
+            flex-wrap: wrap;
+        }
+        .filtro-nivel label {
+            color: #b0cce0;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+        .filtro-nivel select {
+            background: #1a3146;
+            color: #ecf5ff;
+            border: 1px solid #4a6a7a;
+            border-radius: 40px;
+            padding: 0.4rem 1.2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+        }
+        .filtro-nivel select:focus { border-color: #d4b06a; }
+
+        .pregunta-card {
+            background: rgba(16, 32, 46, 0.8);
+            border-radius: 28px;
+            padding: 1.5rem 1.8rem;
+            margin-bottom: 1.3rem;
+            border: 1px solid rgba(255, 215, 120, 0.06);
+            transition: 0.15s;
+            display: block;
+        }
+        .pregunta-card.oculto { display: none; }
+        .pregunta-card:hover { border-color: #c9a84b40; background: rgba(22, 44, 62, 0.85); }
+        .preg-header {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 0.6rem;
+        }
+        .num-preg {
+            background: #0d1f2f;
+            color: #d4b06a;
+            padding: 0.1rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: 1px solid #5a7a5a;
+        }
+        .dificultad {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            padding: 0.15rem 1.1rem;
+            border-radius: 30px;
+            letter-spacing: 0.4px;
+            background: #1e3a3a;
+            color: #b5d6b5;
+            border: 1px solid #3e6a4a;
+        }
+        .dificultad.avanzado { background: #3a2a2a; color: #e6b5a0; border-color: #8a4a3a; }
+        .dificultad.intermedio { background: #2a3a3a; color: #b0d0d0; border-color: #4a7a7a; }
+        .enunciado {
+            color: #e8f2fc;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin: 0.4rem 0 1rem 0;
+        }
+        .opciones {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding-left: 0.2rem;
+        }
+        .opcion {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.5rem 1.2rem;
+            border-radius: 18px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: 0.1s;
+        }
+        .opcion:hover { background: #1e3a4e; border-color: #5a8a9a; }
+        .opcion input[type="radio"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #6a8a9a;
+            border-radius: 50%;
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+            background: #0d1f2f;
+            transition: 0.1s;
+        }
+        .opcion input[type="radio"]:checked {
+            border-color: #d4b06a;
+            background: #d4b06a;
+            box-shadow: 0 0 0 3px #1a2f44;
+        }
+        .opcion input[type="radio"]:checked::after {
+            content: "✓";
+            position: relative;
+            display: block;
+            color: #0b1a2e;
+            font-weight: 700;
+            font-size: 13px;
+            left: 2px;
+            top: -2px;
+        }
+        .opcion label {
+            color: #dae6f5;
+            font-size: 0.98rem;
+            line-height: 1.5;
+            cursor: pointer;
+            flex: 1;
+        }
+        .feedback {
+            margin-top: 0.7rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            background: #101f2e;
+            border-left: 6px solid #4a6a8a;
+            color: #c0d8ee;
+            display: none;
+            font-weight: 500;
+        }
+        .feedback.mostrar { display: block; }
+        .feedback.correcta { border-left-color: #6bc46b; background: #1a3a2a; color: #b8e6b8; }
+        .feedback.incorrecta { border-left-color: #d46a6a; background: #3a1e1e; color: #f0c0c0; }
+        .stats {
+            background: #0b1a2a;
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            display: inline-flex;
+            gap: 28px;
+            flex-wrap: wrap;
+            color: #d4e6ff;
+            font-weight: 500;
+            border: 1px solid #3a5a6a;
+        }
+        .stats span { color: #e5c27a; }
+        .footer-examen {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 2.2rem;
+            gap: 18px;
+        }
+        .contador-visibles {
+            color: #8aacbe;
+            font-size: 0.9rem;
+            padding: 0.3rem 1.2rem;
+            background: #0d1f2f;
+            border-radius: 40px;
+            border: 1px solid #2a4a5a;
+        }
+        @media (max-width: 700px) {
+            .examen-wrapper { padding: 1rem 0.8rem; }
+            .pregunta-card { padding: 1.2rem 1rem; }
+            h1 { font-size: 1.5rem; padding-left: 0.8rem; }
+            .opcion { padding: 0.5rem 0.8rem; }
+            .filtro-nivel { padding: 0.3rem 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="examen-wrapper" id="app">
+    <h1>📘 POLICÍA SEGUNDO · 2026</h1>
+    <div class="subhead">
+        <span>🔹 140 preguntas · Manual PSegundo (Instrucción, Vigilancia, Derecho Penal, Comunicación, Planes Operativos)</span>
+        <div class="controles-superiores">
+            <div class="filtro-nivel">
+                <label for="filtroNivel">🎯 Nivel:</label>
+                <select id="filtroNivel">
+                    <option value="todos">Todos</option>
+                    <option value="basico">Básico</option>
+                    <option value="intermedio">Intermedio</option>
+                    <option value="avanzado">Avanzado</option>
+                </select>
+            </div>
+            <button class="btn btn-corregir" id="btnCorregir">✅ Corregir</button>
+            <button class="btn btn-reset" id="btnReset">⟳ Reiniciar</button>
+        </div>
+    </div>
+
+    <div id="preguntasContainer"></div>
+
+    <div class="footer-examen">
+        <div class="stats">
+            <span>📌 Respondidas: <span id="respondidasCount">0</span>/140</span>
+            <span>✅ Aciertos: <span id="aciertosCount">0</span></span>
+            <span>📊 Calificación: <span id="calificacion">-</span></span>
+        </div>
+        <div class="contador-visibles" id="contadorVisibles">Mostrando: 140 preguntas</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ------------------------------------------------------------------
+        // 140 preguntas basadas en el Manual PSegundo_2026[1].pdf
+        // Unidades: Instrucción y Disciplina Policial II, Vigilancia y Patrullaje,
+        // Nociones de Derecho Penal, Comunicación Asertiva, Planes Operativos
+        // Distribución: 28 preguntas por unidad (aprox)
+        // ------------------------------------------------------------------
+        const preguntas = [
+
+            // ================================================================
+            // UNIDAD 1: INSTRUCCIÓN Y DISCIPLINA POLICIAL II (preguntas 1-28)
+            // ================================================================
+
+            // Básicas (1-10)
+            { id: 1, nivel: 'basico', enunciado: '¿Cuál es la unidad mínima de instrucción y la mínima de combate según el manual?', opciones: ['La sección', 'La compañía', 'El pelotón', 'La escuadra'], correcta: 2 },
+            { id: 2, nivel: 'basico', enunciado: 'El pelotón está conformado por:', opciones: ['Un policía segundo y dos escuadras', 'Tres escuadras y un policía primero', 'Dos secciones', 'Cuatro escuadras'], correcta: 0 },
+            { id: 3, nivel: 'basico', enunciado: 'La formación en "línea en una fila" se emplea para:', opciones: ['Marchas', 'Revistas', 'Reunión y revistas', 'Desfiles'], correcta: 2 },
+            { id: 4, nivel: 'basico', enunciado: 'La formación en "columna por uno" se emplea para:', opciones: ['Reuniones', 'Marchas', 'Revistas', 'Ceremonias'], correcta: 1 },
+            { id: 5, nivel: 'basico', enunciado: 'La escolta de bandera está integrada por:', opciones: ['Tres elementos y un comandante', 'Cuatro elementos y un policía segundo', 'Cinco elementos y un oficial', 'Seis elementos y un suboficial'], correcta: 1 },
+            { id: 6, nivel: 'basico', enunciado: 'El paso redoblado de la escolta de bandera tiene una cadencia de:', opciones: ['100 pasos por minuto', '110 pasos por minuto', '120 pasos por minuto', '130 pasos por minuto'], correcta: 2 },
+            { id: 7, nivel: 'basico', enunciado: 'El paso acelerado de la escolta de bandera tiene una cadencia de:', opciones: ['120 pasos por minuto', '125 pasos por minuto', '130 pasos por minuto', '140 pasos por minuto'], correcta: 2 },
+            { id: 8, nivel: 'basico', enunciado: 'El paso corto de la escolta de bandera tiene una longitud de:', opciones: ['25 cm', '30 cm', '35 cm', '40 cm'], correcta: 2 },
+            { id: 9, nivel: 'basico', enunciado: 'El paso atrás de la escolta de bandera no debe darse más de:', opciones: ['10 pasos', '15 pasos', '20 pasos', '25 pasos'], correcta: 1 },
+            { id: 10, nivel: 'basico', enunciado: 'El saludo militar se realiza con la mano derecha a la altura de la:', opciones: ['Frente', 'Sien', 'Pecho', 'Hombro'], correcta: 1 },
+
+            // Intermedias (11-18)
+            { id: 11, nivel: 'intermedio', enunciado: 'La voz preventiva para la formación "REUNIRSE" es seguida por la voz ejecutiva:', opciones: ['"FUEGO"', '"YA"', '"AHORA"', '"EJECUTIVO"'], correcta: 1 },
+            { id: 12, nivel: 'intermedio', enunciado: 'En la formación "alinearse por la derecha", el hombre base:', opciones: ['Gira la cabeza a la derecha', 'Mantiene la vista al frente', 'Empuña la mano izquierda', 'Se coloca en el centro'], correcta: 1 },
+            { id: 13, nivel: 'intermedio', enunciado: 'La sección está organizada por:', opciones: ['Dos pelotones', 'Tres pelotones', 'Cuatro pelotones', 'Cinco pelotones'], correcta: 1 },
+            { id: 14, nivel: 'intermedio', enunciado: 'La formación de la sección en "línea en dos filas" se emplea para:', opciones: ['Marchas', 'Reuniones', 'Revistas', 'Desfiles'], correcta: 2 },
+            { id: 15, nivel: 'intermedio', enunciado: 'La compañía está integrada por:', opciones: ['Dos secciones', 'Tres secciones', 'Cuatro secciones', 'Cinco secciones'], correcta: 1 },
+            { id: 16, nivel: 'intermedio', enunciado: 'El Escudo Nacional está constituido por un águila mexicana con el perfil:', opciones: ['Derecho expuesto', 'Izquierdo expuesto', 'Frontal', 'De espaldas'], correcta: 1 },
+            { id: 17, nivel: 'intermedio', enunciado: 'La Bandera Nacional consiste en un rectángulo dividido en tres franjas verticales. ¿Qué color va al centro?', opciones: ['Verde', 'Blanco', 'Rojo', 'Amarillo'], correcta: 1 },
+            { id: 18, nivel: 'intermedio', enunciado: 'La proporción entre anchura y longitud de la Bandera Nacional es de:', opciones: ['Tres a cinco', 'Cuatro a siete', 'Cinco a ocho', 'Seis a nueve'], correcta: 1 },
+
+            // Avanzadas (19-28) - NUEVAS
+            { id: 19, nivel: 'avanzado', enunciado: 'Durante una ceremonia de honores a la bandera, el comandante nota que un elemento no dirige la vista al lábaro durante el toque de "Bandera". Según el protocolo, debe:', opciones: ['Ignorar la falta', 'Sancionar al elemento después de la ceremonia', 'Corregir la falta en el momento de forma discreta', 'Reportar al superior sin actuar'], correcta: 2 },
+            { id: 20, nivel: 'avanzado', enunciado: 'La escolta de bandera recibe la voz preventiva "ATENCIÓN ESCOLTA COLUMNA POR DOS". La formación resultante es:', opciones: ['Una fila con la bandera al centro', 'Dos filas con la bandera en primera fila', 'Tres filas con la bandera al frente', 'Cuatro filas con la bandera en el centro'], correcta: 1 },
+            { id: 21, nivel: 'avanzado', enunciado: 'En la escala jerárquica, el Policía Segundo lleva en el hombro:', opciones: ['Una cinta en forma de V', 'Dos cintas en forma de V', 'Tres cintas en forma de V', 'Una pirámide'], correcta: 1 },
+            { id: 22, nivel: 'avanzado', enunciado: 'Según la Ley sobre el Escudo, la Bandera y el Himno Nacional, el Escudo Nacional en la Bandera debe tener un diámetro de:', opciones: ['La mitad del ancho de la franja blanca', 'Tres cuartas partes del ancho de la franja blanca', 'El ancho completo de la franja blanca', 'Dos tercios del ancho de la franja blanca'], correcta: 1 },
+            { id: 23, nivel: 'avanzado', enunciado: 'El saludo civil a la Bandera Nacional se realiza en posición de firme, colocando la mano derecha extendida sobre el pecho con la palma:', opciones: ['Hacia arriba', 'Hacia abajo', 'Hacia el frente', 'Hacia el costado'], correcta: 1 },
+            { id: 24, nivel: 'avanzado', enunciado: 'En los honores fúnebres, al descender el féretro, el corneta de órdenes toca:', opciones: ['Toque de silencio', 'Toque de bandera', 'Toque de atención', 'Toque de honor'], correcta: 0 },
+            { id: 25, nivel: 'avanzado', enunciado: 'Cuando una bandera pasa cerca de una guardia, los centinelas deben presentar armas y los elementos desarmados:', opciones: ['Permanecer en descanso', 'Adoptar el primer tiempo de saludo', 'Retirarse del lugar', 'Ignorar el paso de la bandera'], correcta: 1 },
+            { id: 26, nivel: 'avanzado', enunciado: 'En la organización de la escolta de bandera, el abanderado se coloca en:', opciones: ['Primera fila, centro', 'Primera fila, costado derecho del policía segundo', 'Segunda fila, izquierda', 'Detrás del comandante'], correcta: 1 },
+            { id: 27, nivel: 'avanzado', enunciado: 'El paso alargado de la escolta de bandera tiene una longitud de 75 cm y una cadencia de:', opciones: ['110 pasos por minuto', '115 pasos por minuto', '120 pasos por minuto', '130 pasos por minuto'], correcta: 2 },
+            { id: 28, nivel: 'avanzado', enunciado: 'En la formación de la sección en "columna por tres", los sargentos se colocan:', opciones: ['A la derecha de cada pelotón', 'En la misma altura de su pelotón', 'Al frente de toda la sección', 'A la retaguardia'], correcta: 1 },
+
+            // ================================================================
+            // UNIDAD 2: VIGILANCIA Y PATRULLAJE (preguntas 29-56)
+            // ================================================================
+
+            // Básicas (29-38)
+            { id: 29, nivel: 'basico', enunciado: 'La vigilancia consiste en observar y/o custodiar un bien mueble o inmueble, persona u objeto con la intención de:', opciones: ['Realizar detenciones', 'Acatar una instrucción superior, judicial o ministerial', 'Recolectar información', 'Realizar patrullajes'], correcta: 1 },
+            { id: 30, nivel: 'basico', enunciado: 'El patrullaje es el recorrido sistemático que realiza el policía en una zona determinada con el propósito de:', opciones: ['Realizar detenciones masivas', 'Acciones de salvaguarda y vigilancia', 'Recolectar impuestos', 'Vigilar a otros policías'], correcta: 1 },
+            { id: 31, nivel: 'basico', enunciado: 'El rondín se lleva a cabo cuando una determinada calle o ubicación tiene:', opciones: ['Poca afluencia de personas', 'Gran afluencia de personas o comisión frecuente de faltas', 'Ningún incidente', 'Solo vehículos estacionados'], correcta: 1 },
+            { id: 32, nivel: 'basico', enunciado: 'El recorrido de vigilancia se debe realizar a:', opciones: ['Alta velocidad', 'Velocidad mínima para observar anomalías', 'Velocidad máxima permitida', 'Indiferente a la velocidad'], correcta: 1 },
+            { id: 33, nivel: 'basico', enunciado: 'La vigilancia estacionaria o fija se realiza en lugares de:', opciones: ['Baja afluencia de personas', 'Mayor afluencia de personas', 'Zonas rurales', 'Carreteras'], correcta: 1 },
+            { id: 34, nivel: 'basico', enunciado: 'La vigilancia móvil consiste en el despliegue de la fuerza policial por determinadas zonas con:', opciones: ['Punto fijo de observación', 'Variación de rutas y horarios', 'Solo en horario nocturno', 'Solo en vehículo'], correcta: 1 },
+            { id: 35, nivel: 'basico', enunciado: 'La vigilancia mixta combina la vigilancia:', opciones: ['Diurna y nocturna', 'Estacionaria y móvil', 'Preventiva y reactiva', 'A pie y en vehículo'], correcta: 1 },
+            { id: 36, nivel: 'basico', enunciado: 'El patrullaje preventivo se realiza con el fin de:', opciones: ['Restablecer el orden después de un delito', 'Identificar y neutralizar factores de riesgo', 'Perseguir a delincuentes', 'Realizar detenciones'], correcta: 1 },
+            { id: 37, nivel: 'basico', enunciado: 'El patrullaje disuasivo se realiza para:', opciones: ['Restablecer el orden', 'Disuadir la amenaza ante probabilidad de delito', 'Investigar delitos', 'Reaccionar ante un delito'], correcta: 1 },
+            { id: 38, nivel: 'basico', enunciado: 'El patrullaje reactivo se realiza para:', opciones: ['Prevenir delitos', 'Disuadir al delincuente', 'Restablecer condiciones de seguridad después de un delito', 'Realizar patrullaje a pie'], correcta: 2 },
+
+            // Intermedias (39-48)
+            { id: 39, nivel: 'intermedio', enunciado: 'El patrullaje a pie se recomienda realizarlo en pareja para:', opciones: ['Cubrir más territorio', 'Tener mejor reacción ante un hecho delictivo', 'Ahorrar recursos', 'Cumplir con el reglamento'], correcta: 1 },
+            { id: 40, nivel: 'intermedio', enunciado: 'El patrullaje en camioneta tipo panel está recomendado para:', opciones: ['Patrullaje en zonas rurales', 'Grupos especiales como UTR', 'Centro histórico', 'Parques y jardines'], correcta: 1 },
+            { id: 41, nivel: 'intermedio', enunciado: 'El patrullaje en bicicleta es una herramienta indispensable en áreas de:', opciones: ['Zonas rurales', 'Mayor afluencia de personas y vehículos', 'Carreteras', 'Zonas industriales'], correcta: 1 },
+            { id: 42, nivel: 'intermedio', enunciado: 'El patrullaje en motocicleta es recomendable para:', opciones: ['Zonas rurales', 'Vías de alto flujo vehicular y sectores bancarios', 'Parques y jardines', 'Centros comerciales'], correcta: 1 },
+            { id: 43, nivel: 'intermedio', enunciado: 'En la entrevista al conductor de un vehículo con un solo ocupante, el policía de intervención debe colocarse:', opciones: ['Frente al vehículo', 'A la altura del poste intermedio de las puertas', 'Detrás del vehículo', 'En el asiento trasero'], correcta: 1 },
+            { id: 44, nivel: 'intermedio', enunciado: 'Al detener un vehículo en la noche, el carro radio patrulla debe permanecer con:', opciones: ['Luces apagadas', 'Luces altas encendidas', 'Luces de estacionamiento', 'Luces interiores encendidas'], correcta: 1 },
+            { id: 45, nivel: 'intermedio', enunciado: 'En la aproximación a un vehículo estacionado o abandonado, el policía no debe:', opciones: ['Informar a la central', 'Hacer inspección visual', 'Abrir el vehículo sin ocupantes', 'Preguntar a vecinos'], correcta: 2 },
+            { id: 46, nivel: 'intermedio', enunciado: 'Los propósitos de la vigilancia y el patrullaje incluyen todos los siguientes EXCEPTO:', opciones: ['Prevenir la comisión de delitos', 'Desalentar a los criminales', 'Recolectar impuestos', 'Proteger la vida y los bienes'], correcta: 2 },
+            { id: 47, nivel: 'intermedio', enunciado: 'El equipo policial incluye todos los siguientes EXCEPTO:', opciones: ['Tonfa o PR-24', 'Chaleco antibalas nivel IV', 'Teléfono celular personal', 'Kit de Primer Respondiente'], correcta: 2 },
+            { id: 48, nivel: 'intermedio', enunciado: 'El "olfato policial" se desarrolla mediante la observación de:', opciones: ['Solo delitos graves', 'Conductas atípicas en la vía pública', 'Solo vehículos sospechosos', 'Informes policiales'], correcta: 1 },
+
+            // Avanzadas (49-56) - NUEVAS
+            { id: 49, nivel: 'avanzado', enunciado: 'Durante un patrullaje, un oficial observa la cortina de un establecimiento abierta de manera forzada a las 3:00 a.m. Según el manual, debe:', opciones: ['Ignorar la situación', 'Realizar una inspección del lugar', 'Reportar a la central y proceder con precaución', 'Esperar a que salga el propietario'], correcta: 1 },
+            { id: 50, nivel: 'avanzado', enunciado: 'Un policía realiza patrullaje en un sector bancario y observa a un sujeto que actúa de manera nerviosa y evita el contacto visual. La mejor táctica es:', opciones: ['Abordarlo de inmediato', 'Mantener observación discreta y reportar a la central', 'Ignorarlo', 'Realizar una detención preventiva'], correcta: 1 },
+            { id: 51, nivel: 'avanzado', enunciado: 'Durante una entrevista vehicular, el conductor parece nervioso y no está familiarizado con el vehículo. Esto podría indicar:', opciones: ['Vehículo robado', 'Conductor novato', 'Vehículo alquilado', 'Conductor distraído'], correcta: 0 },
+            { id: 52, nivel: 'avanzado', enunciado: 'En un patrullaje a pie, el policía debe variar la ruta para:', opciones: ['Cumplir con el reglamento', 'Evitar la rutina y posibles emboscadas', 'Ahorrar energía', 'Cubrir más territorio'], correcta: 1 },
+            { id: 53, nivel: 'avanzado', enunciado: 'Al realizar un patrullaje en camioneta tipo pick-up, los oficiales en la parte posterior tienen la ventaja de:', opciones: ['Mayor protección', 'Visión amplia por encima de otros vehículos', 'Menor visibilidad', 'Mayor comodidad'], correcta: 1 },
+            { id: 54, nivel: 'avanzado', enunciado: 'En la detención de un vehículo con conductor que desciende, el policía debe ordenar que:', opciones: ['Se acerque a la patrulla', 'Abra la puerta y saque ambas manos por la ventanilla', 'Se siente en el suelo', 'Coloque las manos en la cabeza'], correcta: 1 },
+            { id: 55, nivel: 'avanzado', enunciado: 'Al aproximarse a un vehículo estacionado con una persona aparentemente sin vida en el interior, el policía debe:', opciones: ['Abrir el vehículo inmediatamente', 'Solicitar Ministerio Público y preservar el lugar', 'Alejarse del lugar', 'Preguntar a los vecinos'], correcta: 1 },
+            { id: 56, nivel: 'avanzado', enunciado: 'El patrullaje en automóvil tipo sedán es óptimo para:', opciones: ['Zonas rurales', 'Áreas urbanas o centro histórico', 'Terrenos accidentados', 'Parques y jardines'], correcta: 1 },
+
+            // ================================================================
+            // UNIDAD 3: NOCIONES DE DERECHO PENAL (preguntas 57-98)
+            // ================================================================
+
+            // Básicas (57-66)
+            { id: 57, nivel: 'basico', enunciado: 'El delito se define en el Código Penal Federal como:', opciones: ['Toda acción que dañe a otra persona', 'El acto u omisión que sancionan las leyes penales', 'Toda conducta que altere el orden público', 'La violación de cualquier norma jurídica'], correcta: 1 },
+            { id: 58, nivel: 'basico', enunciado: 'La tipicidad como elemento del delito significa:', opciones: ['La conducta es contraria a la norma', 'El acto u omisión coincide con la descripción de la figura delictiva', 'El sujeto tiene capacidad para comprender lo ilícito', 'La conducta es punible'], correcta: 1 },
+            { id: 59, nivel: 'basico', enunciado: 'La antijuridicidad como elemento del delito significa:', opciones: ['La conducta se adecua al tipo penal', 'La conducta es contraria a la norma jurídica', 'El sujeto comprende lo ilícito', 'La conducta es punible'], correcta: 1 },
+            { id: 60, nivel: 'basico', enunciado: 'La imputabilidad como elemento del delito significa:', opciones: ['La conducta se adecua al tipo penal', 'La conducta es contraria a la norma', 'La capacidad del sujeto para comprender lo ilícito de su conducta', 'La conducta es punible'], correcta: 2 },
+            { id: 61, nivel: 'basico', enunciado: 'La culpabilidad como elemento del delito permite:', opciones: ['Atribuir el delito a una persona', 'Reprochar al sujeto la ejecución del hecho ilícito', 'Establecer el castigo', 'Definir la conducta'], correcta: 1 },
+            { id: 62, nivel: 'basico', enunciado: 'La punibilidad como elemento del delito es:', opciones: ['La capacidad de entender lo ilícito', 'El castigo o sanción prevista en la ley', 'La conducta contraria a la norma', 'La adecuación al tipo penal'], correcta: 1 },
+            { id: 63, nivel: 'basico', enunciado: 'La conducta es dolosa si se ejecutó con:', opciones: ['Imprudencia', 'Intención', 'Negligencia', 'Culpa'], correcta: 1 },
+            { id: 64, nivel: 'basico', enunciado: 'La conducta es culposa si se produce el resultado típico por:', opciones: ['Intención', 'Violación de un deber de cuidado', 'Dolo', 'Premeditación'], correcta: 1 },
+            { id: 65, nivel: 'basico', enunciado: 'El delito de lesiones se define como causar a otro un daño que altere su salud física o mental o que:', opciones: ['Cause la muerte', 'Deje huella material', 'Genere incapacidad permanente', 'Requiera cirugía'], correcta: 1 },
+            { id: 66, nivel: 'basico', enunciado: 'Las causas de exclusión del delito incluyen todas las siguientes EXCEPTO:', opciones: ['Legítima defensa', 'Estado de necesidad', 'Cumplimiento de un deber legal', 'Venganza'], correcta: 3 },
+
+            // Intermedias (67-78)
+            { id: 67, nivel: 'intermedio', enunciado: 'La legítima defensa requiere que la agresión sea:', opciones: ['Pasada', 'Actual, real e inminente', 'Futura', 'Verbal'], correcta: 1 },
+            { id: 68, nivel: 'intermedio', enunciado: 'El delito de robo se consuma cuando:', opciones: ['Se planea el apoderamiento', 'Se apodera de un bien ajeno sin derecho ni consentimiento', 'Se daña la propiedad', 'Se oculta el objeto robado'], correcta: 1 },
+            { id: 69, nivel: 'intermedio', enunciado: 'El delito de abuso de confianza se caracteriza porque:', opciones: ['Se usa violencia física', 'Se dispone de un bien del cual se tenía la tenencia y no el dominio', 'Se daña la propiedad ajena', 'Se amenaza a la víctima'], correcta: 1 },
+            { id: 70, nivel: 'intermedio', enunciado: 'El delito de fraude se configura cuando:', opciones: ['Se usa violencia para apoderarse de un bien', 'Se engaña a alguien para obtener un lucro indebido', 'Se daña la propiedad de otro', 'Se retiene a una persona contra su voluntad'], correcta: 1 },
+            { id: 71, nivel: 'intermedio', enunciado: 'El delito de allanamiento de morada se persigue:', opciones: ['De oficio', 'Por querella de la parte ofendida', 'Solo si hay violencia', 'Siempre con prisión preventiva'], correcta: 1 },
+            { id: 72, nivel: 'intermedio', enunciado: 'El delito de violencia familiar se persigue:', opciones: ['Por querella', 'De oficio', 'Solo si hay lesiones graves', 'Por denuncia del vecino'], correcta: 1 },
+            { id: 73, nivel: 'intermedio', enunciado: 'El delito de extorsión se consuma cuando:', opciones: ['Se amenaza para obtener lucro', 'Se daña la propiedad', 'Se retiene a una persona', 'Se usa violencia física'], correcta: 0 },
+            { id: 74, nivel: 'intermedio', enunciado: 'El delito de asalto se distingue del atraco porque:', opciones: ['El asalto es en despoblado, el atraco en calle o suburbio', 'Son sinónimos', 'El asalto es nocturno', 'El atraco es con arma'], correcta: 0 },
+            { id: 75, nivel: 'intermedio', enunciado: 'El delito de violación se sanciona con prisión de:', opciones: ['Tres a ocho años', 'Ocho a veinte años', 'Quince a treinta años', 'Veinte a cuarenta años'], correcta: 1 },
+            { id: 76, nivel: 'intermedio', enunciado: 'El delito de hostigamiento sexual requiere:', opciones: ['Relación de subordinación', 'Relación de igualdad', 'Consentimiento de la víctima', 'Violencia física'], correcta: 0 },
+            { id: 77, nivel: 'intermedio', enunciado: 'El delito de cohecho se configura cuando un servidor público:', opciones: ['Acepta un soborno para hacer o dejar de hacer algo relacionado con sus funciones', 'Ejerce funciones sin nombramiento', 'Abandona su puesto', 'Utiliza fondos públicos indebidamente'], correcta: 0 },
+            { id: 78, nivel: 'intermedio', enunciado: 'El delito de peculado se comete cuando un servidor público:', opciones: ['Acepta un soborno', 'Distrae dinero o bienes públicos para uso propio o ajeno', 'Abandona su puesto', 'Ejerce funciones sin nombramiento'], correcta: 1 },
+
+            // Avanzadas (79-98) - NUEVAS
+            { id: 79, nivel: 'avanzado', enunciado: 'Un policía realiza una detención en flagrancia por robo. El probable responsable opone resistencia activa. Según el Código Penal, la resistencia a la autoridad se tipifica como:', opciones: ['Delito contra la autoridad', 'Falta administrativa', 'Delito contra el patrimonio', 'No constituye delito'], correcta: 0 },
+            { id: 80, nivel: 'avanzado', enunciado: 'Un servidor público utiliza su cargo para exigir dinero a un ciudadano a cambio de no aplicar una sanción. Esto constituye el delito de:', opciones: ['Cohecho', 'Concusión', 'Peculado', 'Abuso de autoridad'], correcta: 1 },
+            { id: 81, nivel: 'avanzado', enunciado: 'El delito de desaparición forzada de personas solo puede ser cometido por:', opciones: ['Cualquier particular', 'Servidor público con motivo de sus atribuciones', 'Militares en activo', 'Policías fuera de servicio'], correcta: 1 },
+            { id: 82, nivel: 'avanzado', enunciado: 'En el delito de violación, el aumento de pena se aplica cuando el delito es cometido por:', opciones: ['Un desconocido', 'Un ascendiente o tutor contra su descendiente o pupilo', 'Un policía fuera de servicio', 'Un menor de edad'], correcta: 1 },
+            { id: 83, nivel: 'avanzado', enunciado: 'El delito de tráfico de influencia se configura cuando un servidor público:', opciones: ['Acepta un soborno', 'Gestiona la tramitación ilícita de negocios aprovechando su cargo', 'Abandona su puesto', 'Ejerce funciones sin nombramiento'], correcta: 1 },
+            { id: 84, nivel: 'avanzado', enunciado: 'El delito de enriquecimiento ilícito requiere que el servidor público:', opciones: ['Acepte un soborno', 'No pueda acreditar el legítimo aumento de su patrimonio', 'Abandone su puesto', 'Ejerca funciones sin nombramiento'], correcta: 1 },
+            { id: 85, nivel: 'avanzado', enunciado: 'En el Código Penal Federal, el delito de abuso sexual se sanciona con prisión de:', opciones: ['Uno a tres años', 'Tres a siete años', 'Siete a doce años', 'Doce a veinte años'], correcta: 1 },
+            { id: 86, nivel: 'avanzado', enunciado: 'El delito de robo de vehículo en el Código Penal del Estado de Puebla se sanciona con:', opciones: ['Dos a cuatro años', 'Seis a doce años', 'Tres a ocho años', 'Quince a veinte años'], correcta: 1 },
+            { id: 87, nivel: 'avanzado', enunciado: 'En los delitos sexuales, el estupro se configura cuando se tiene cópula con persona mayor de catorce años pero menor de dieciocho empleando:', opciones: ['Violencia', 'Seducción o engaño', 'Amenaza', 'Fuerza física'], correcta: 1 },
+            { id: 88, nivel: 'avanzado', enunciado: 'El delito de allanamiento de morada se configura aunque:', opciones: ['Haya orden de autoridad', 'Se ingrese sin violencia', 'La vivienda esté deshabitada', 'Se tenga permiso verbal'], correcta: 1 },
+            { id: 89, nivel: 'avanzado', enunciado: 'El delito de despojo se caracteriza por:', opciones: ['Apoderarse de un bien mueble', 'Ocupar un inmueble ajeno de propia autoridad', 'Dañar la propiedad de otro', 'Estafar a una persona'], correcta: 1 },
+            { id: 90, nivel: 'avanzado', enunciado: 'El delito de daño en propiedad ajena se sanciona con pena mayor cuando:', opciones: ['El daño es menor', 'Se realiza en edificio habitado', 'El propietario es conocido', 'Hay testigos'], correcta: 1 },
+            { id: 91, nivel: 'avanzado', enunciado: 'El delito de ataque al pudor se persigue de oficio cuando:', opciones: ['La víctima es mayor de edad', 'El sujeto pasivo es menor de 12 años o no puede resistir', 'Se usa violencia', 'El delito es cometido por un familiar'], correcta: 1 },
+            { id: 92, nivel: 'avanzado', enunciado: 'En el Sistema Penal Acusatorio, la carga de la prueba recae en:', opciones: ['El acusado', 'El Ministerio Público', 'El juez', 'La víctima'], correcta: 1 },
+            { id: 93, nivel: 'avanzado', enunciado: 'El principio de inmediación en el Sistema Penal Acusatorio exige que:', opciones: ['Las audiencias sean públicas', 'El juez desarrolle la audiencia en presencia de las partes', 'Las pruebas se desahoguen por escrito', 'El proceso sea rápido'], correcta: 1 },
+            { id: 94, nivel: 'avanzado', enunciado: 'El principio de contradicción en el Sistema Penal Acusatorio permite a las partes:', opciones: ['Conocer y controvertir los medios de prueba', 'Solo presentar pruebas', 'Solo hacer alegatos', 'Decidir la sentencia'], correcta: 0 },
+            { id: 95, nivel: 'avanzado', enunciado: 'El principio de concentración en el Sistema Penal Acusatorio establece que las audiencias deben desarrollarse:', opciones: ['En días alternos', 'Preferentemente en un mismo día o en días consecutivos', 'En el plazo de un mes', 'Sin límite de tiempo'], correcta: 1 },
+            { id: 96, nivel: 'avanzado', enunciado: 'El delito de encubrimiento por receptación se sanciona cuando:', opciones: ['Se participa en el delito', 'Se adquieren objetos producto del delito con conocimiento', 'Se omite denunciar un delito', 'Se ayuda al delincuente a escapar'], correcta: 1 },
+            { id: 97, nivel: 'avanzado', enunciado: 'El delito de extorsión se sanciona con prisión de:', opciones: ['Uno a cinco años', 'Dos a diez años', 'Cinco a quince años', 'Diez a veinte años'], correcta: 1 },
+            { id: 98, nivel: 'avanzado', enunciado: 'El delito de abuso de autoridad se configura cuando el servidor público:', opciones: ['Ejerce funciones sin nombramiento', 'Hace violencia a una persona sin causa legítima', 'Acepta un soborno', 'Abandona su puesto'], correcta: 1 },
+
+            // ================================================================
+            // UNIDAD 4: COMUNICACIÓN ASERTIVA (preguntas 99-119)
+            // ================================================================
+
+            // Básicas (99-108)
+            { id: 99, nivel: 'basico', enunciado: 'El proceso de comunicación incluye los elementos: emisor, receptor, mensaje, código, canal y:', opciones: ['Retroalimentación', 'Contexto', 'Interferencia', 'Señal'], correcta: 0 },
+            { id: 100, nivel: 'basico', enunciado: 'El estilo de comunicación asertivo se caracteriza por:', opciones: ['Expresar lo que se quiere de modo directo, honesto y respetuoso', 'No decir nada sobre lo que molesta', 'Usar intimidación o sarcasmo', 'Ser pasivo'], correcta: 0 },
+            { id: 101, nivel: 'basico', enunciado: 'El estilo de comunicación inhibido o pasivo se caracteriza por:', opciones: ['Expresar claramente los deseos', 'Permitir que violen sus derechos', 'Usar violencia física', 'Ser agresivo'], correcta: 1 },
+            { id: 102, nivel: 'basico', enunciado: 'El estilo de comunicación agresivo se caracteriza por:', opciones: ['Proteger los derechos propios y respetar los ajenos', 'Violar los derechos de los demás', 'No expresar lo que se quiere', 'Ser sumiso'], correcta: 1 },
+            { id: 103, nivel: 'basico', enunciado: 'La autoestima se define como la confianza en la capacidad de pensar y en el derecho a:', opciones: ['Ser feliz', 'Dominar a los demás', 'No rendir cuentas', 'Ser superior'], correcta: 0 },
+            { id: 104, nivel: 'basico', enunciado: 'La empatía se define como la capacidad de:', opciones: ['Imponer la propia voluntad', 'Ponerse en el lugar del otro', 'Manipular a los demás', 'Evitar las emociones'], correcta: 1 },
+            { id: 105, nivel: 'basico', enunciado: 'El autocontrol se relaciona con la capacidad de:', opciones: ['Actuar por impulso', 'Actuar según lo deseado evitando consecuencias negativas', 'Delegar todas las decisiones', 'Evitar toda emoción'], correcta: 1 },
+            { id: 106, nivel: 'basico', enunciado: 'La negociación es el proceso de comunicación que tiene por finalidad:', opciones: ['Imponer la voluntad', 'Influir en el comportamiento de los demás para llegar a un acuerdo', 'Ganar siempre', 'Evitar todo conflicto'], correcta: 1 },
+            { id: 107, nivel: 'basico', enunciado: 'La etapa de prenegociación incluye:', opciones: ['La ejecución del acuerdo', 'La definición de objetivos y estrategias', 'La firma del contrato', 'La evaluación de resultados'], correcta: 1 },
+            { id: 108, nivel: 'basico', enunciado: 'El liderazgo se define como la capacidad de:', opciones: ['Imponer autoridad', 'Actuar como soporte, indicador o guía de los demás', 'Trabajar solo', 'Evitar responsabilidades'], correcta: 1 },
+
+            // Intermedias (109-114)
+            { id: 109, nivel: 'intermedio', enunciado: 'La claridad en la comunicación se logra principalmente:', opciones: ['Usando tecnicismos', 'Seleccionando palabras con significado exacto', 'Escribiendo oraciones muy largas', 'Usando lenguaje poético'], correcta: 1 },
+            { id: 110, nivel: 'intermedio', enunciado: 'La empatía afectiva se refiere a:', opciones: ['Comprender los puntos de vista del otro', 'Compartir una emoción con el otro', 'Entender una cultura diferente', 'Revivir el pasado histórico'], correcta: 1 },
+            { id: 111, nivel: 'intermedio', enunciado: 'La empatía cognitiva se refiere a la capacidad de:', opciones: ['Sentir lo que el otro siente', 'Comprender los puntos de vista del otro sin adoptarlos', 'Entender una cultura diferente', 'Revivir el pasado histórico'], correcta: 1 },
+            { id: 112, nivel: 'intermedio', enunciado: 'El liderazgo democrático o participativo se caracteriza por:', opciones: ['Ordenar y esperar cumplimiento', 'Consultar acciones y decisiones con los subordinados', 'Delegar toda autoridad al grupo', 'Tomar decisiones unilaterales'], correcta: 1 },
+            { id: 113, nivel: 'intermedio', enunciado: 'El trabajo en equipo se diferencia del grupo de trabajo porque:', opciones: ['Cada persona responde individualmente', 'Existe cohesión y responsabilidad compartida', 'Las jerarquías son rígidas', 'No hay coordinación'], correcta: 1 },
+            { id: 114, nivel: 'intermedio', enunciado: 'En la resolución de conflictos, la fase de "aceptación" implica:', opciones: ['Calmarse y evaluar', 'Escuchar lo que las partes tienen que decir', 'Controlar el lenguaje verbal', 'Revisar los procedimientos'], correcta: 1 },
+
+            // Avanzadas (115-119) - NUEVAS
+            { id: 115, nivel: 'avanzado', enunciado: 'Durante una intervención policial, un ciudadano se muestra agresivo verbalmente. El policía debe aplicar comunicación asertiva mediante:', opciones: ['Responder con agresividad', 'Utilizar comandos verbales claros y respetuosos, manteniendo distancia de seguridad', 'Ignorar al ciudadano', 'Usar fuerza física de inmediato'], correcta: 1 },
+            { id: 116, nivel: 'avanzado', enunciado: 'Un policía que experimenta acumulación de emociones negativas en su trabajo debe:', opciones: ['Reprimir las emociones', 'Reconocerlas y trabajar en su autoregulación emocional', 'Desquitarse con los ciudadanos', 'Ignorarlas'], correcta: 1 },
+            { id: 117, nivel: 'avanzado', enunciado: 'En una negociación, el MAAN (Mejor Alternativa a un Acuerdo Negociado) es importante porque:', opciones: ['Define el punto máximo que se puede ceder', 'Permite saber cuándo retirarse de la negociación', 'Establece el precio final', 'Define la estrategia de comunicación'], correcta: 1 },
+            { id: 118, nivel: 'avanzado', enunciado: 'Un líder que "predica con el ejemplo y habla en plural" demuestra:', opciones: ['Debilidad', 'Humildad y compromiso con el equipo', 'Autoritarismo', 'Desinterés'], correcta: 1 },
+            { id: 119, nivel: 'avanzado', enunciado: 'En la resolución de conflictos, la estrategia de "saber esperar" es útil para:', opciones: ['Aplazar la solución indefinidamente', 'Solucionar en momentos de menor tensión', 'Eliminar el conflicto', 'Ignorar a las partes'], correcta: 1 },
+
+            // ================================================================
+            // UNIDAD 5: DISEÑO, INTERPRETACIÓN Y APLICACIÓN DE PLANES OPERATIVOS (preguntas 120-140)
+            // ================================================================
+
+            // Básicas (120-129)
+            { id: 120, nivel: 'basico', enunciado: 'La estrategia policial es el arte de combinar y emplear los medios para:', opciones: ['Ejecutar tácticas', 'Formar planes de operación y dirigir movimientos', 'Realizar detenciones', 'Vigilar zonas'], correcta: 1 },
+            { id: 121, nivel: 'basico', enunciado: 'La táctica policial se refiere al conjunto de técnicas que permiten:', opciones: ['Planear a largo plazo', 'Aplicar la fuerza policial en el punto requerido para alcanzar el objetivo', 'Administrar recursos', 'Realizar patrullajes'], correcta: 1 },
+            { id: 122, nivel: 'basico', enunciado: 'La Orden de Servicio es el medio de inteligencia que tiene por finalidad:', opciones: ['Registrar incidentes', 'Proporcionar los datos esenciales para llevar a cabo una operación', 'Evaluar el desempeño', 'Sancionar faltas'], correcta: 1 },
+            { id: 123, nivel: 'basico', enunciado: 'Los elementos esenciales de la estrategia son base de operaciones, objetivo y:', opciones: ['Táctica', 'Líneas de operación', 'Recursos humanos', 'Presupuesto'], correcta: 1 },
+            { id: 124, nivel: 'basico', enunciado: 'La planeación estratégica se formula en seis etapas, incluyendo:', opciones: ['Ejecución inmediata', 'Identificación de la estrategia y análisis ambiental', 'Solo presupuesto', 'Solo recursos humanos'], correcta: 1 },
+            { id: 125, nivel: 'basico', enunciado: 'En el análisis interno para un plan operativo se deben observar:', opciones: ['Solo factores externos', 'Condiciones de recursos humanos, tecnológicos y materiales', 'Solo aspectos sociodemográficos', 'Solo vías de acceso'], correcta: 1 },
+            { id: 126, nivel: 'basico', enunciado: 'La Orden de Servicio debe ser preferentemente:', opciones: ['Verbal', 'Escrita', 'Telefónica', 'Visual'], correcta: 1 },
+            { id: 127, nivel: 'basico', enunciado: 'La Orden de Servicio debe ser breve, clara, precisa y:', opciones: ['Extensa', 'Completa', 'Complicada', 'Ambiciosa'], correcta: 1 },
+            { id: 128, nivel: 'basico', enunciado: 'En la Orden de Servicio, el apartado de "Misión" debe contener:', opciones: ['La distribución de medios', 'La exposición clara del propósito', 'El horario de inicio', 'Los anexos'], correcta: 1 },
+            { id: 129, nivel: 'basico', enunciado: 'En la Orden de Servicio, el apartado de "Ejecución del Servicio" debe contener:', opciones: ['Solo el horario', 'Finalidad, acciones, despliegues y distribución de medios', 'Los nombres del personal', 'El presupuesto'], correcta: 1 },
+
+            // Intermedias (130-135)
+            { id: 130, nivel: 'intermedio', enunciado: 'La toma de decisiones en el mando operativo requiere:', opciones: ['Actuar sin información', 'Realizar análisis previos y estudio de factores objetivos', 'Decidir por impulso', 'Consultar siempre al superior'], correcta: 1 },
+            { id: 131, nivel: 'intermedio', enunciado: 'Los factores a considerar en la planeación de un operativo incluyen misión, terreno, incidencia delictiva y:', opciones: ['Medios', 'Presupuesto', 'Publicidad', 'Política'], correcta: 0 },
+            { id: 132, nivel: 'intermedio', enunciado: 'La responsabilidad en el mando operativo se caracteriza por:', opciones: ['Compartirse con todos los subordinados', 'Ser inherente al cargo y no delegarse', 'Transferirse al coordinador', 'Ser opcional'], correcta: 1 },
+            { id: 133, nivel: 'intermedio', enunciado: 'El control de la ejecución de las órdenes puede hacerse mediante:', opciones: ['Ignorar el desarrollo', 'Celebración de reuniones previas y vigilancia sobre el terreno', 'Delegar sin supervisión', 'No hacer seguimiento'], correcta: 1 },
+            { id: 134, nivel: 'intermedio', enunciado: 'El análisis de resultados de un operativo debe contener:', opciones: ['Solo los errores', 'Resumen, objetivos, resultados, diferencias y análisis razonado', 'Solo los aciertos', 'Solo el presupuesto'], correcta: 1 },
+            { id: 135, nivel: 'intermedio', enunciado: 'En la dirección de servicios coordinados, el uso de medios de transmisión y enlace permite:', opciones: ['Aislar a las unidades', 'Establecer contacto con órganos superiores y unidades subordinadas', 'Ignorar a los subordinados', 'Centralizar toda la información'], correcta: 1 },
+
+            // Avanzadas (136-140) - NUEVAS
+            { id: 136, nivel: 'avanzado', enunciado: 'Durante un operativo de seguridad, el responsable operativo debe distinguir entre:', opciones: ['Mando operativo y mando técnico', 'Estrategia y táctica', 'Vigilancia y patrullaje', 'Prevención y reacción'], correcta: 0 },
+            { id: 137, nivel: 'avanzado', enunciado: 'En la elaboración de una Orden de Servicio, el uso de abreviaturas debe ser:', opciones: ['Extenso', 'Reglamentario o de uso común conocido', 'Prohibido siempre', 'Utilizado solo en anexos'], correcta: 1 },
+            { id: 138, nivel: 'avanzado', anunciado: 'Un operativo de seguridad que requiere la concurrencia de múltiples unidades debe establecer claramente:', opciones: ['Solo el horario', 'La estructura de mando: quién ostenta la responsabilidad operativa y quién el mando técnico', 'Solo el presupuesto', 'Solo el número de elementos'], correcta: 1 },
+            { id: 139, nivel: 'avanzado', enunciado: 'En la dirección de servicios, la capacidad de previsión es consecuencia de:', opciones: ['La improvisación', 'La información proporcionada y su correcto uso', 'La intuición', 'La experiencia únicamente'], correcta: 1 },
+            { id: 140, nivel: 'avanzado', enunciado: 'El informe de resultados de un operativo debe incluir un análisis crítico para:', opciones: ['Culpar a los subordinados', 'Subsanar deficiencias y corregir desviaciones para futuros servicios', 'Justificar gastos', 'Ocultar errores'], correcta: 1 }
+        ];
+
+        // Estado
+        let respuestasUsuario = new Array(140).fill(null);
+        let nivelFiltro = 'todos';
+
+        const container = document.getElementById('preguntasContainer');
+        const respondidasSpan = document.getElementById('respondidasCount');
+        const aciertosSpan = document.getElementById('aciertosCount');
+        const calificacionSpan = document.getElementById('calificacion');
+        const contadorVisibles = document.getElementById('contadorVisibles');
+        const filtroSelect = document.getElementById('filtroNivel');
+
+        function renderPreguntas() {
+            let html = '';
+            preguntas.forEach((p, idx) => {
+                const nivelClass = p.nivel === 'avanzado' ? 'avanzado' : (p.nivel === 'intermedio' ? 'intermedio' : '');
+                const letras = ['a', 'b', 'c', 'd'];
+                const oculto = (nivelFiltro !== 'todos' && p.nivel !== nivelFiltro) ? 'oculto' : '';
+                html += `<div class="pregunta-card ${oculto}" data-index="${idx}" data-nivel="${p.nivel}">
+                    <div class="preg-header">
+                        <span class="num-preg">${idx+1}.</span>
+                        <span class="dificultad ${nivelClass}">${p.nivel}</span>
+                    </div>
+                    <div class="enunciado">${p.enunciado}</div>
+                    <div class="opciones">`;
+                p.opciones.forEach((opc, optIndex) => {
+                    const checked = (respuestasUsuario[idx] === optIndex) ? 'checked' : '';
+                    html += `<div class="opcion">
+                        <input type="radio" name="pregunta_${idx}" value="${optIndex}" ${checked} id="p${idx}_${optIndex}">
+                        <label for="p${idx}_${optIndex}">${letras[optIndex]}) ${opc}</label>
+                    </div>`;
+                });
+                html += `</div>
+                    <div class="feedback" id="feedback_${idx}"></div>
+                </div>`;
+            });
+            container.innerHTML = html;
+
+            // eventos radio
+            document.querySelectorAll('.opcion input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', function(e) {
+                    const preguntaDiv = this.closest('.pregunta-card');
+                    const idx = parseInt(preguntaDiv.dataset.index);
+                    const val = parseInt(this.value);
+                    respuestasUsuario[idx] = val;
+                    const fb = document.getElementById(`feedback_${idx}`);
+                    if (fb) {
+                        fb.classList.remove('mostrar', 'correcta', 'incorrecta');
+                        fb.style.display = 'none';
+                        fb.innerHTML = '';
+                    }
+                    actualizarEstadisticas();
+                });
+            });
+
+            // restaurar feedbacks si ya existen
+            for (let i = 0; i < preguntas.length; i++) {
+                if (respuestasUsuario[i] !== null) {
+                    const fb = document.getElementById(`feedback_${i}`);
+                    if (fb) {
+                        const esCorrecta = (respuestasUsuario[i] === preguntas[i].correcta);
+                        fb.style.display = 'block';
+                        fb.classList.add('mostrar');
+                        fb.classList.add(esCorrecta ? 'correcta' : 'incorrecta');
+                        const letras = ['a','b','c','d'];
+                        const correctaLetra = letras[preguntas[i].correcta];
+                        const respuestaLetra = letras[respuestasUsuario[i]];
+                        fb.innerHTML = esCorrecta
+                            ? `<strong>✅ Correcto.</strong>`
+                            : `<strong>❌ Incorrecto.</strong> Correcta: ${correctaLetra}. Tu respuesta: ${respuestaLetra}.`;
+                    }
+                }
+            }
+
+            // actualizar contador de visibles
+            const visibles = document.querySelectorAll('.pregunta-card:not(.oculto)').length;
+            contadorVisibles.textContent = `Mostrando: ${visibles} preguntas`;
+            actualizarEstadisticas();
+        }
+
+        function actualizarEstadisticas() {
+            const totalVisibles = document.querySelectorAll('.pregunta-card:not(.oculto)').length;
+            const respondidas = respuestasUsuario.filter((r, idx) => {
+                const card = document.querySelector(`.pregunta-card[data-index="${idx}"]`);
+                return r !== null && card && !card.classList.contains('oculto');
+            }).length;
+            respondidasSpan.textContent = respondidas;
+
+            let correctas = 0;
+            for (let i = 0; i < preguntas.length; i++) {
+                const card = document.querySelector(`.pregunta-card[data-index="${i}"]`);
+                if (respuestasUsuario[i] !== null && card && !card.classList.contains('oculto')) {
+                    if (respuestasUsuario[i] === preguntas[i].correcta) correctas++;
+                }
+            }
+            aciertosSpan.textContent = correctas;
+            const calif = totalVisibles > 0 ? Math.round((correctas / totalVisibles) * 100) : 0;
+            calificacionSpan.textContent = totalVisibles > 0 ? `${calif}%` : '-';
+        }
+
+        function corregirExamen() {
+            for (let i = 0; i < preguntas.length; i++) {
+                const fb = document.getElementById(`feedback_${i}`);
+                if (!fb) continue;
+                const card = document.querySelector(`.pregunta-card[data-index="${i}"]`);
+                if (card && card.classList.contains('oculto')) continue;
+
+                const respuesta = respuestasUsuario[i];
+                if (respuesta === null) {
+                    fb.style.display = 'block';
+                    fb.classList.add('mostrar', 'incorrecta');
+                    fb.innerHTML = `<strong>⚠️ Sin responder.</strong>`;
+                    continue;
+                }
+                const esCorrecta = (respuesta === preguntas[i].correcta);
+                fb.style.display = 'block';
+                fb.classList.add('mostrar');
+                fb.classList.remove('correcta', 'incorrecta');
+                fb.classList.add(esCorrecta ? 'correcta' : 'incorrecta');
+                const letras = ['a','b','c','d'];
+                const correctaLetra = letras[preguntas[i].correcta];
+                const respuestaLetra = letras[respuesta];
+                fb.innerHTML = esCorrecta
+                    ? `<strong>✅ Correcto.</strong>`
+                    : `<strong>❌ Incorrecto.</strong> Correcta: ${correctaLetra}. Tu respuesta: ${respuestaLetra}.`;
+            }
+            actualizarEstadisticas();
+        }
+
+        function resetExamen() {
+            respuestasUsuario = new Array(140).fill(null);
+            document.querySelectorAll('.opcion input[type="radio"]').forEach(radio => radio.checked = false);
+            document.querySelectorAll('.feedback').forEach(fb => {
+                fb.style.display = 'none';
+                fb.classList.remove('mostrar', 'correcta', 'incorrecta');
+                fb.innerHTML = '';
+            });
+            actualizarEstadisticas();
+        }
+
+        function aplicarFiltro() {
+            nivelFiltro = filtroSelect.value;
+            document.querySelectorAll('.pregunta-card').forEach(card => {
+                const nivel = card.dataset.nivel;
+                if (nivelFiltro === 'todos' || nivel === nivelFiltro) {
+                    card.classList.remove('oculto');
+                } else {
+                    card.classList.add('oculto');
+                }
+            });
+            actualizarEstadisticas();
+            const visibles = document.querySelectorAll('.pregunta-card:not(.oculto)').length;
+            contadorVisibles.textContent = `Mostrando: ${visibles} preguntas`;
+        }
+
+        // Eventos
+        document.getElementById('btnCorregir').addEventListener('click', corregirExamen);
+        document.getElementById('btnReset').addEventListener('click', resetExamen);
+        filtroSelect.addEventListener('change', aplicarFiltro);
+
+        renderPreguntas();
+    })();
+</script>
+</body>
+</html>
